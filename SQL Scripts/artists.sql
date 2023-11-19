@@ -8,5 +8,7 @@ CREATE TABLE IF NOT EXISTS artists (
 	genre_3 VARCHAR,
 	genre_4 VARCHAR,
 	genre_5 VARCHAR,
-	followers INTEGER
+	followers INTEGER,
+	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

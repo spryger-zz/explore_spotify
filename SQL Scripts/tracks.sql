@@ -8,7 +8,9 @@ CREATE TABLE IF NOT EXISTS tracks (
 	album_id VARCHAR ,
 	artist_id VARCHAR,
 	artist_count INTEGER,
-	popularity INTEGER
+	popularity INTEGER,
+	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+	updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 ALTER TABLE tracks
