@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS artists (
 	id VARCHAR PRIMARY KEY,
 	name VARCHAR,
 	popularity VARCHAR,
-	genre_count DATE,
+	genre_count INTEGER,
 	genre_1 VARCHAR,
 	genre_2 VARCHAR,
 	genre_3 VARCHAR,
@@ -12,3 +12,5 @@ CREATE TABLE IF NOT EXISTS artists (
 	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+
+
