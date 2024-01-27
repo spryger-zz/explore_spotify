@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS artists (
+CREATE TABLE IF NOT EXISTS main.artists (
 	id VARCHAR PRIMARY KEY,
 	name VARCHAR,
 	popularity VARCHAR,

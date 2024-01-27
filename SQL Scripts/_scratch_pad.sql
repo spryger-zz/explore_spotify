@@ -3,7 +3,7 @@ WHERE constraint_schema = 'public'
 
 SELECT * FROM information_schema.columns
 WHERE table_schema = 'public'
-	AND table_name = 'streams'
+	AND table_name = 'artists'
 
 INSERT INTO artists(id)
 VALUES ('Artist1');
@@ -31,9 +31,12 @@ SELECT * FROM albums
 SELECT * FROM tracks
 SELECT * FROM streams
 
-DELETE FROM streams WHERE id = 1
+DELETE FROM artists WHERE id in ('Artist1')
 
-SELECT * 
+SELECT s.id as stream_id, 
+	t.id as track_id, 
+	al.id as album_id,
+	ar.id as artist_id
 FROM streams s
 INNER JOIN tracks t
 	ON s.track_id = t.id
@@ -41,3 +44,8 @@ INNER JOIN albums al
 	ON t.album_id = al.id 
 INNER JOIN artists ar
 	ON t.artist_id = ar.id
+LIMIT 10
+	
+UPDATE streams
+SET duration_ms = 123
+WHERE id = 1;
