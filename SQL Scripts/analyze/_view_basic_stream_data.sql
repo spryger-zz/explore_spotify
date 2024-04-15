@@ -1,6 +1,6 @@
 
-DROP VIEW IF EXISTS main.view_basic_stream_data;
-CREATE VIEW main.view_basic_stream_data AS
+--DROP VIEW IF EXISTS main.view_basic_stream_data;
+CREATE OR REPLACE VIEW main.view_basic_stream_data AS
 SELECT 
 	t.name as track_name,
 	al.name as album_name,
@@ -18,7 +18,8 @@ SELECT
 	s.id as stream_id,
 	t.id as track_id,
 	al.id as album_id,
-	ar.id as artist_id
+	ar.id as artist_id,
+	al.total_tracks AS album_total_tracks
 FROM main.streams s
 INNER JOIN main.tracks t
 	ON s.track_id = t.id

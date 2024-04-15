@@ -8,7 +8,7 @@ from (
 		hr_streamed_total,
 		hr_streamed_in_month,
 		ROW_NUMBER() OVER (PARTITION BY (first_played_month) ORDER BY min_streamed_in_month DESC) row_count
-	from new_artists_streamed_monthly nasm 
+	from main.new_artists_streamed_monthly nasm 
 	) a
 where row_count =1
 
