@@ -1,3 +1,5 @@
+
+/*** First Time Listening to an Album ***/
 SELECT album_id,
 	album_name,
 	artist_name,
@@ -15,4 +17,4 @@ HAVING COUNT(distinct track_id) >= album_total_tracks
 --HAVING album_total_tracks - COUNT(distinct track_id) = 1
 /* PERCENTAGE LISTENED TO */
 --HAVING ROUND(COUNT(distinct track_id),2) / album_total_tracks > .80
-ORDER BY first_played_year
+ORDER BY first_played_year;
