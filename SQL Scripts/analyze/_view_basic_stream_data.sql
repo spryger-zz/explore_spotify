@@ -19,7 +19,9 @@ SELECT
 	t.id as track_id,
 	al.id as album_id,
 	ar.id as artist_id,
-	al.total_tracks AS album_total_tracks
+	al.total_tracks AS album_total_tracks,
+	t.disc_number,
+	t.track_number 
 FROM main.streams s
 INNER JOIN main.tracks t
 	ON s.track_id = t.id

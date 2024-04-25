@@ -30,3 +30,12 @@ WHERE  t2.id = t1.album_id
 AND    t2.artist_id IS DISTINCT FROM t1.artist_id;
 
 create table main.dupe_albums as (select * from main.albums);
+
+ALTER TABLE main.albums
+ADD album_image_640_url VARCHAR;
+
+ALTER TABLE main.albums
+ADD album_image_300_url VARCHAR;
+
+ALTER TABLE main.albums
+ADD album_image_64_url VARCHAR;

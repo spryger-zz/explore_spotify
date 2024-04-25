@@ -9,5 +9,8 @@ CREATE TABLE IF NOT EXISTS staging.staging_albums (
 	album_label VARCHAR,
 	created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 	updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-	artist_id VARCHAR
+	artist_id VARCHAR,
+	album_image_640_url VARCHAR,
+	album_image_300_url VARCHAR,
+	album_image_64_url VARCHAR
 );
