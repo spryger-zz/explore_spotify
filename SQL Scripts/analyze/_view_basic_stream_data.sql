@@ -21,7 +21,15 @@ SELECT
 	ar.id as artist_id,
 	al.total_tracks AS album_total_tracks,
 	t.disc_number,
-	t.track_number 
+	t.track_number,
+	t.duration_ms AS track_duration,
+	s.reason_start,
+	s.reason_end,
+	s.shuffle,
+	s.skipped,
+	al.album_image_640_url,
+	al.album_image_300_url,
+	al.album_image_64_url
 FROM main.streams s
 INNER JOIN main.tracks t
 	ON s.track_id = t.id
