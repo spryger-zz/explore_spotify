@@ -1,0 +1,8 @@
+*.chache
+.ipynb_checkpoints/
+__pycache__/
+data_dump/
+.git/
+*.csv
+*.docx
+*.ppt
