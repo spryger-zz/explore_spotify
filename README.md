@@ -18,8 +18,8 @@ Spotify allows you to download your streaming history in 2 different formats:
   1) extended streaming history (all time streams)
   2) account data (1 year streams)
 
-## What does this script do?
-It will read a zip file downloaded from Spotify (either extended or 1 year format) and normalize the data.
-This requires some API calls because the 1 year format is very narrow scope (artist, track, timestamp, duration).
-Take that normalized data and add it to the database.
-Read the database for analysis purposes (I lean towards PowerBI and sometimes matplotlib)
+## What does this script do?  
+  1) It will read a zip file downloaded from Spotify (either extended or 1 year format) and normalize the data.
+  2) This requires some API calls because the 1 year format is very narrow scope (artist, track, timestamp, duration).
+  3) Take that normalized data and add it to the database.
+  4) Read the database for analysis purposes (I lean towards PowerBI and sometimes matplotlib)
