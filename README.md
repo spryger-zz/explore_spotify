@@ -18,25 +18,25 @@ Create a database of your Spotify streaming history to better understand music s
 ## 1) /explore_spotify/
   Contains the 3 major classes used for processing.
 
-  ### DataProcessor.py
+### DataProcessor.py
   Combines the uses of the other 2 classes to perform as the main class executing functions.
-  
-  ### DatabaseTerminal.py
+
+### DatabaseTerminal.py
   Functions to read and write to the database. This does not include the scripts to create the database (for those see sql_build).
-  
-  ### SpotifyTerminal.py
+
+### SpotifyTerminal.py
   Used for calling the Spotify API for additional data about track, album, and artist.
-  
-  ## 2) /sql_analyze/
+
+## 2) /sql_analyze/
   SQL scripts to create views that help analyze the data from this process.
-  
-  ## 3) /sql_build/
+
+## 3) /sql_build/
   SQL scripts to create the schemas, main tables, builder tables (just for genre), and staging tables for writing new data.
   
 # Requirements
 1) Spotify App w/ IDs to access the Spotify API
   These are required to get more details about each track, album, & artist.
-  I Recommend you check out their developer terms: https://developer.spotify.com/compliance-tips.
+  I Recommend you check out their developer terms too.
 2) Setting up an entire postgresql database
   These scripts require a database for saving results.
   Scripts for the schemas and tables are available in the sql_scripts directory.
