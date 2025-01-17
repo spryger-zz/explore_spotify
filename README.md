@@ -37,6 +37,7 @@ Create a database of your Spotify streaming history to better understand music s
 1) Spotify App w/ IDs to access the Spotify API
   These are required to get more details about each track, album, & artist.
   I Recommend you check out their developer terms too.
+  Add the Client ID and Client Secret to your environment variables called "SPOTIPY_CLIENT_ID" and "SPOTIPY_CLIENT_SECRET"
 2) Setting up an entire postgresql database
   These scripts require a database for saving results.
   Scripts for the schemas and tables are available in the sql_scripts directory.
