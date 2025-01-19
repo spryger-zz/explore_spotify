@@ -7,7 +7,7 @@ import psycopg2
 import psycopg2.extras as extras 
 
 # Class which can acces the database containing my user data
-class DatabaseTerminal:
+class DatabaseTerminalProcessor:
     # Initialize with a password, this will only need to be entered once when the class is created rather than each time a query is called
     def __init__(self):
         print('input db password')

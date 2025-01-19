@@ -1,4 +1,6 @@
-from . import SpotifyTerminal, DatabaseTerminal
+#from . import SpotifyTerminal, DatabaseTerminal
+from SpotifyTerminal import SpotifyTerminalProcessor as SpotifyTerminal
+from DatabaseTerminal import DatabaseTerminalProcessor as DatabaseTerminal
 #System
 import os
 import json
@@ -6,13 +8,16 @@ import zipfile
 #Data Processing
 import pandas as pd
 import math
+import numpy as np
 
 
-class DataProcessor:
+class DataProcessorProcessor:
     def __init__(self):
         # Locations of the data to process and where to archive it
-        self.staging_path = 'files_to_process/data_staging/'
-        self.archive_path = 'files_to_process/archive/'
+        
+        self.input_path = 'processing/input_spotify_data/'
+        # self.staging_path = 'processing/staging/'
+        self.archive_path = 'processing/archive/'
 
         self.streams_columns = ['track_id','track_name','artist_name','album_name','track_type','duration_ms','played_at','reason_start','reason_end','shuffle','skipped','context','username','data_source']
         self.tracks_columns = ['id','name','disc_number','track_number','explicit','duration_ms','album_id','artist_id','artist_count','popularity']
@@ -54,34 +59,34 @@ class DataProcessor:
     ### DATA DOWNLOAD NORMALIZATION ###
     ###################################
     
-    def check_files_in_staging(self):
+    def check_files_in_input(self):
         # This function does 2 things:
-        # 1) It makes sure there is one and only one file in the staging area
+        # 1) It makes sure there is one and only one file in the input area
         # 2) It reads the file name and sets it's file path and name to self variables
-        files_in_staging = os.listdir(self.staging_path)
-        num_files_in_staging = len(files_in_staging)
-        if num_files_in_staging > 1:
-            print('too many files in staging')
-            self.staging_path_file = None
+        files_in_input = os.listdir(self.input_path)
+        num_files_in_input = len(files_in_input)
+        if num_files_in_input > 1:
+            print('too many files in input')
+            self.input_path_file = None
             return
-        elif num_files_in_staging == 0:
-            print('no files in staging')
-            self.staging_path_file = None
+        elif num_files_in_input == 0:
+            print('no files in input')
+            self.input_path_file = None
             return
         else:
-            self.staging_file = files_in_staging[0]
-            self.staging_path_file = self.staging_path + self.staging_file
-            print('staging_file: {}'.format(self.staging_file))
+            self.input_file = files_in_input[0]
+            self.input_path_file = self.input_path + self.input_file
+            print('input_file: {}'.format(self.input_file))
     
     def normalize_raw_extended_streams(self):
         # This function intakes the extended streaming data (all time historical streams), normalizes the column names, and flattens it into a single dataframe
         # NOTE: extended streams contains lots of information already about each track.
         # Open and append streaming audio hisotry 
-        if self.staging_path_file == None:
-            print('normalizer could not find staging file')
+        if self.input_path_file == None:
+            print('normalizer could not find input file')
             return
         streaming_data_raw = []
-        with zipfile.ZipFile(self.staging_path_file, "r") as myzip:
+        with zipfile.ZipFile(self.input_path_file, "r") as myzip:
             for filename in myzip.namelist():
                 if 'Streaming_History_Audio' in filename:
                     with myzip.open(filename) as f: 
@@ -107,16 +112,16 @@ class DataProcessor:
         df_streams.rename(columns=stream_column_rename,inplace=True)
         df_streams['data_source'] = 'extended_history'
         df_streams['context'] = None
-        self.df_streams = df_streams[streams_columns]
+        self.df_streams = df_streams[self.streams_columns]
 
     def normalize_raw_account_data_streams(self):
         # This function intakes the account streaming data (1 year streams), combines the artist and track name into a unique ID, and tries to see if that unique ID already exists in the DB
         # Open Streaming History File
-        if self.staging_path_file == None:
-            print('normalizer could not find staging file')
+        if self.input_path_file == None:
+            print('normalizer could not find input file')
             return
         streaming_data_raw = []
-        with zipfile.ZipFile(self.staging_path_file, "r") as myzip:
+        with zipfile.ZipFile(self.input_path_file, "r") as myzip:
             for filename in myzip.namelist():
                 if 'StreamingHistory_music' in filename:
                     with myzip.open(filename) as f: 
@@ -183,8 +188,8 @@ class DataProcessor:
         df_streams.rename(columns={'trackName':'track_name','artistName':'artist_name','msPlayed':'duration_ms','endTime':'played_at'}, inplace=True)
         self.df_streams = df_streams[self.streams_columns]
     
-    def move_staging_to_archive(self):
-        os.rename(self.staging_path_file, self.archive_path + slef.staging_file)
+    def move_input_to_archive(self):
+        os.rename(self.input_path_file, self.archive_path + self.input_file)
 
     ###############################
     ### UPDATE DB WITH NEW DATA ###
@@ -198,6 +203,7 @@ class DataProcessor:
             self.db.execute_values(df_to_load, destination_table)
             self.db.close()
         else:
+            print('destination table not a staging table')
             return
     
     def check_new_streams_db_overlap(self):
@@ -205,7 +211,7 @@ class DataProcessor:
         #   Run either of these 2 prior to running this (df_streams needs to exist)
         #      1) normalize_raw_extended_streams
         #      2) normalize_raw_account_data_streams
-        if proc.df_streams['data_source'].nunique() > 1:
+        if self.df_streams['data_source'].nunique() > 1:
             print('too many different data_source types for the current process')
             return
         data_source_to_load = self.df_streams['data_source'].max()

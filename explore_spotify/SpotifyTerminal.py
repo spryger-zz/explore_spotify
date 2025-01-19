@@ -5,7 +5,7 @@ import requests
 #Data Processing
 from datetime import datetime
 
-class SpotifyTerminal:
+class SpotifyTerminalProcessor:
     def __init__(self):
         AUTH_URL = 'https://accounts.spotify.com/api/token'
         
