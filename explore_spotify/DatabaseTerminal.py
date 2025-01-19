@@ -38,8 +38,22 @@ class DatabaseTerminalProcessor:
             cursor.close() 
         cursor.close()
         return df_query_result
-        
-    def execute_values(self, df, table): 
+
+    def execute_general_sql(self, sql_code):
+        # Executes a query
+        cursor = self.conn.cursor() 
+        try:
+            cursor.execute(sql_code)
+            self.conn.commit()
+        except (Exception, psycopg2.DatabaseError) as error: 
+            print("Error: %s" % error) 
+            self.conn.rollback() 
+            cursor.close() 
+            return 1
+        print("general sql code executed")
+        cursor.close()
+
+    def execute_insert_values_from_df(self, df, table): 
         # Prep Data
         tuples = [tuple(x) for x in df.to_numpy()] 
         cols = ','.join(list(df.columns)) 
@@ -56,4 +70,38 @@ class DatabaseTerminalProcessor:
             cursor.close() 
             return 1
         print("the dataframe is inserted") 
+        cursor.close()
+    
+    def truncate_table(self, sql_code): 
+        # SQL query to execute 
+        query = "TRUNCATE TABLE " + table 
+        cursor = self.conn.cursor() 
+        # Execute
+        try: 
+            cursor.execute(query)
+            self.conn.commit() 
+        except (Exception, psycopg2.DatabaseError) as error: 
+            print("Error: %s" % error) 
+            self.conn.rollback() 
+            cursor.close() 
+            return 1
+        print("general sql code executed") 
+        cursor.close()
+
+    def move_raw_streams(self):
+        # Get max played_at from main.streams
+        query = 'SELECT MAX(played_at) FROM main.streams' 
+        # SQL query to execute 
+        query = "TRUNCATE TABLE " + table 
+        cursor = self.conn.cursor() 
+        # Execute
+        try: 
+            cursor.execute(query)
+            self.conn.commit() 
+        except (Exception, psycopg2.DatabaseError) as error: 
+            print("Error: %s" % error) 
+            self.conn.rollback() 
+            cursor.close() 
+            return 1
+        print("the table is truncated") 
         cursor.close()
