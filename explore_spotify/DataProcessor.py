@@ -281,9 +281,9 @@ class DataProcessorProcessor:
             result = item['track']
         except:
             result = item
-        subset = dict((k, result[k]) for k in ('id', 'name', 'duration_ms', 'popularity', 'disc_number', 'track_number', 'explicit', 'type'))
+        subset = dict((k, result[k]) for k in ('id', 'name', 'disc_number', 'track_number', 'explicit', 'duration_ms', 'popularity'))
         subset['album_id'] = result['album']['id']
-        subset['artist_id'] = result['artists'][0]['id']
+        # subset['artist_id'] = result['artists'][0]['id']
         subset['artist_count'] = len(result['artists'])
         try:
             subset['context'] = item['context']['uri']

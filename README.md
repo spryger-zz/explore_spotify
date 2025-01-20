@@ -44,3 +44,15 @@ Create a database of your Spotify streaming history to better understand music s
 3) Create a couple folders in the base directory called:
   files_to_process/data_staging/
   files_to_process/archived/
+
+# Process
+## Extended Streams Process
+1) Put zip file into folder: processing/input_spotify_data 
+2) read_and_stage_extended_streams.py
+3) identify_and_remove_streams_overlap.py
+4) process_missing_tracks.py
+5) process_missing_albums.py
+6) process_missing_artists.py
+7) copy_data_from_staging_to_main.py
+## Account Data Process
+This is not developed yet

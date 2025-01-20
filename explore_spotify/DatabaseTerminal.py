@@ -72,36 +72,3 @@ class DatabaseTerminalProcessor:
         print("the dataframe is inserted") 
         cursor.close()
     
-    def truncate_table(self, sql_code): 
-        # SQL query to execute 
-        query = "TRUNCATE TABLE " + table 
-        cursor = self.conn.cursor() 
-        # Execute
-        try: 
-            cursor.execute(query)
-            self.conn.commit() 
-        except (Exception, psycopg2.DatabaseError) as error: 
-            print("Error: %s" % error) 
-            self.conn.rollback() 
-            cursor.close() 
-            return 1
-        print("general sql code executed") 
-        cursor.close()
-
-    def move_raw_streams(self):
-        # Get max played_at from main.streams
-        query = 'SELECT MAX(played_at) FROM main.streams' 
-        # SQL query to execute 
-        query = "TRUNCATE TABLE " + table 
-        cursor = self.conn.cursor() 
-        # Execute
-        try: 
-            cursor.execute(query)
-            self.conn.commit() 
-        except (Exception, psycopg2.DatabaseError) as error: 
-            print("Error: %s" % error) 
-            self.conn.rollback() 
-            cursor.close() 
-            return 1
-        print("the table is truncated") 
-        cursor.close()

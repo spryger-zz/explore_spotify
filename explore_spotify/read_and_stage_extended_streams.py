@@ -4,7 +4,7 @@ from DataProcessor import DataProcessorProcessor as DataProcessor
 ### General Data Model ###
 ##########################
 
-# Streams > Tracks > Artists > Albums
+# Streams > Tracks > Albums > Artists
 # Must be populated in reverse order (start with albums, then artists, then tracks, then streams)
 
 ######################################
