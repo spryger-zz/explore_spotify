@@ -19,7 +19,7 @@ class DataProcessorProcessor:
         # self.staging_path = 'processing/staging/'
         self.archive_path = 'processing/archive/'
 
-        self.streams_columns = ['track_id','track_name','artist_name','album_name','track_type','duration_ms','played_at','reason_start','reason_end','shuffle','skipped','context','username','data_source']
+        self.streams_columns = ['track_id','track_name','artist_name','album_name','track_type','duration_ms','played_at','reason_start','reason_end','shuffle','skipped','context','data_source']
         self.tracks_columns = ['id','name','disc_number','track_number','explicit','duration_ms','album_id','artist_id','artist_count','popularity']
         self.albums_columns = ['id','name','album_type','release_date','release_date_precision','popularity','total_tracks','album_label']
         self.artists_columns = ['id','name','popularity','genre_count','genre_1','genre_2','genre_3','genre_4','genre_5','followers']
@@ -200,7 +200,7 @@ class DataProcessorProcessor:
             # Opening the database
             self.db = DatabaseTerminal() # WOULD LIKE TO DELETE THIS IF POSSIBLE
             self.db.open()
-            self.db.execute_values(df_to_load, destination_table)
+            self.db.execute_insert_values_from_df(df_to_load, destination_table)
             self.db.close()
         else:
             print('destination table not a staging table')

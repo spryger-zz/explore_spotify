@@ -29,7 +29,10 @@ SELECT
 	s.skipped,
 	al.album_image_640_url,
 	al.album_image_300_url,
-	al.album_image_64_url
+	al.album_image_64_url,
+	al_streams.album_first_played_date,
+	t_streams.track_first_played_date,
+	ar_streams.artist_first_played_date
 FROM main.streams s
 INNER JOIN main.tracks t
 	ON s.track_id = t.id
@@ -37,5 +40,38 @@ INNER JOIN main.albums al
 	ON t.album_id = al.id 
 INNER JOIN main.artists ar
 	ON al.artist_id = ar.id
+INNER JOIN 
+	(SELECT t.id AS track_id,
+		min(played_at) AS track_first_played_date
+	FROM main.streams s
+	INNER JOIN main.tracks t
+		ON s.track_id = t.id
+	GROUP BY t.id
+	) t_streams
+	ON t_streams.track_id = t.id
+INNER JOIN 
+	(SELECT al.id AS album_id,
+		min(played_at) AS album_first_played_date
+	FROM main.streams s
+	INNER JOIN main.tracks t
+		ON s.track_id = t.id
+	INNER JOIN main.albums al
+		ON t.album_id = al.id
+	GROUP BY al.id
+	) al_streams
+	ON al_streams.album_id = al.id
+INNER JOIN 
+	(SELECT ar.id AS artist_id,
+		min(played_at) AS artist_first_played_date
+	FROM main.streams s
+	INNER JOIN main.tracks t
+		ON s.track_id = t.id
+	INNER JOIN main.albums al
+		ON t.album_id = al.id
+	INNER JOIN main.artists ar
+		ON al.artist_id = ar.id
+	GROUP BY ar.id
+	) ar_streams
+	ON ar_streams.artist_id = ar.id
 LEFT JOIN builder.genres g 
 	ON ar.genre_1 = g.raw_genre;

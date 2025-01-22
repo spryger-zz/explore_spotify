@@ -26,8 +26,8 @@ proc.check_files_in_input()
 print('reading and normalizing extended streams')
 proc.normalize_raw_extended_streams()
 
-print('moving input to archive')
-proc.move_input_to_archive()
-
 print('loading extended streams to db staging (does not truncate)')
 proc.add_dataframe_to_db_staging(proc.df_streams, 'staging.raw_streams')
+
+print('moving input to archive')
+proc.move_input_to_archive()

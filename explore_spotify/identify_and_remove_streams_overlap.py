@@ -11,8 +11,8 @@ db = DatabaseTerminal()
 db.open()
 db.execute_general_sql('TRUNCATE TABLE staging.staging_streams')
 db.execute_general_sql('''
-    INSERT INTO staging.staging_streams (track_id, track_name, artist_name, album_name, track_type, duration_ms, played_at, reason_start, reason_end, shuffle, skipped, context, username, data_source)
-    SELECT track_id, track_name, artist_name, album_name, track_type, duration_ms, played_at, reason_start, reason_end, shuffle, skipped, context, username, data_source
+    INSERT INTO staging.staging_streams (track_id, track_name, artist_name, album_name, track_type, duration_ms, played_at, reason_start, reason_end, shuffle, skipped, context, data_source)
+    SELECT track_id, track_name, artist_name, album_name, track_type, duration_ms, played_at, reason_start, reason_end, shuffle, skipped, context, data_source
     FROM staging.raw_streams
     WHERE played_at > (SELECT MAX(played_at) FROM main.streams)
         AND track_type = 'track'

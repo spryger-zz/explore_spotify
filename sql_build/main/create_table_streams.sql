@@ -21,3 +21,8 @@ CREATE TABLE IF NOT EXISTS main.streams (
 
 ALTER TABLE streams
 ADD CONSTRAINT streams_track_fkey FOREIGN KEY (track_id) REFERENCES tracks (id)
+
+
+ALTER TABLE main.streams 
+    ALTER id ADD GENERATED ALWAYS AS IDENTITY 
+        (START WITH 74035)
