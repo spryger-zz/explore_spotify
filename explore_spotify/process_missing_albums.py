@@ -7,7 +7,8 @@ db.open()
 albums_df = db.query('''
     SELECT distinct album_id 
     FROM staging.staging_tracks
-    WHERE album_id not in (SELECT id FROM main.albums)''')
+    WHERE album_id not in (SELECT id FROM main.albums)
+    ''')
 
 proc = DataProcessor()
 proc.get_new_table_data(albums_df['album_id'], 'albums')

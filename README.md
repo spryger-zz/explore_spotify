@@ -56,3 +56,5 @@ Create a database of your Spotify streaming history to better understand music s
 7) copy_data_from_staging_to_main.py
 ## Account Data Process
 This is not developed yet
+## Lookup Top X Album List Spotify Data
+ 

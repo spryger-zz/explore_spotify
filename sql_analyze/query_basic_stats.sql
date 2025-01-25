@@ -13,7 +13,7 @@ SELECT 'Count Streams' AS metric_name,
 FROM main.view_basic_stream_data
 
 
-
+   
 SELECT 'Newest Stream' AS metric_name,
 	CAST(MAX(played_at) as varchar) AS metric_value
 FROM staging.staging_streams

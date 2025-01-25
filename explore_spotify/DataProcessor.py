@@ -20,9 +20,9 @@ class DataProcessorProcessor:
         self.archive_path = 'processing/archive/'
 
         self.streams_columns = ['track_id','track_name','artist_name','album_name','track_type','duration_ms','played_at','reason_start','reason_end','shuffle','skipped','context','data_source']
-        self.tracks_columns = ['id','name','disc_number','track_number','explicit','duration_ms','album_id','artist_id','artist_count','popularity']
-        self.albums_columns = ['id','name','album_type','release_date','release_date_precision','popularity','total_tracks','album_label']
-        self.artists_columns = ['id','name','popularity','genre_count','genre_1','genre_2','genre_3','genre_4','genre_5','followers']
+        # self.tracks_columns = ['id','name','disc_number','track_number','explicit','duration_ms','album_id','artist_id','artist_count','popularity']
+        # self.albums_columns = ['id','name','album_type','release_date','release_date_precision','popularity','total_tracks','album_label']
+        # self.artists_columns = ['id','name','popularity','genre_count','genre_1','genre_2','genre_3','genre_4','genre_5','followers','artist_image_640_url','artist_image_300_url','artist_image_64_url']
 
         # create instance of database terminal
         # self.db = DatabaseTerminal()
@@ -274,6 +274,14 @@ class DataProcessorProcessor:
         item['followers'] = item['followers']['total']
         
         subset = dict((k, item[k]) for k in ('id','name','popularity','followers','genre_count','genre_1','genre_2','genre_3','genre_4','genre_5'))
+        
+        subset['artist_image_url'] = None
+
+        if len(item['images']) > 0:
+            subset['artist_image_url'] = item['images'][0]['url']
+        else:
+            pass
+
         return subset
     
     def parse_track_result(self, item):

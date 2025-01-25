@@ -5,9 +5,10 @@ db = DatabaseTerminal()
 db.open()
 
 artists_df = db.query('''
-    SELECT distinct artist_id 
-    FROM staging.staging_albums
-    WHERE artist_id not in (SELECT id FROM main.artists)''')
+    SELECT distinct id as artist_id
+    FROM main.artists
+    --WHERE artist_id not in (SELECT id FROM main.artists)
+    ''')
 
 proc = DataProcessor()
 proc.get_new_table_data(artists_df['artist_id'], 'artists')

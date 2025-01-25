@@ -1,5 +1,5 @@
 
---DROP VIEW IF EXISTS main.view_basic_stream_data;
+--DROP VIEW IF EXISTS main.view_basic_stream_data CASCADE;
 CREATE OR REPLACE VIEW main.view_basic_stream_data AS
 SELECT 
 	t.name as track_name,
@@ -32,7 +32,8 @@ SELECT
 	al.album_image_64_url,
 	al_streams.album_first_played_date,
 	t_streams.track_first_played_date,
-	ar_streams.artist_first_played_date
+	ar_streams.artist_first_played_date,
+	ar.artist_image_url
 FROM main.streams s
 INNER JOIN main.tracks t
 	ON s.track_id = t.id

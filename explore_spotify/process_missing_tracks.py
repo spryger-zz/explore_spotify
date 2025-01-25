@@ -7,7 +7,8 @@ db.open()
 tracks_df = db.query('''
     SELECT distinct track_id 
     FROM staging.staging_streams 
-    WHERE track_id not in (SELECT id FROM main.tracks)''')
+    WHERE track_id not in (SELECT id FROM main.tracks)
+    ''')
 
 proc = DataProcessor()
 proc.get_new_table_data(tracks_df['track_id'], 'tracks')
